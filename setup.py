@@ -10,5 +10,6 @@ setup(
     entry_points={"console_scripts": [
         "parse_fmask=parse_fmask.parse_fmask:main",
         "check_solar_zenith_sentinel=check_solar_zenith_sentinel.check_solar_zenith_sentinel:main",
+        "get_s2_granule_dir=get_s2_granule_dir.get_s2_granule_dir:main",
     ]},
 )
