@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<espa_metadata version="2.2"
+xmlns="http://espa.cr.usgs.gov/v2"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://espa.cr.usgs.gov/v2 http://espa.cr.usgs.gov/schema/espa_internal_metadata_v2_2.xsd">
+
+    <global_metadata>
+        <data_provider>USGS/EROS</data_provider>
+        <satellite>Sentinel-2A</satellite>
+        <instrument>MSI</instrument>
+        <acquisition_date>2020-04-26</acquisition_date>
+        <level1_production_date>2020-04-26T19:49:30.000000Z</level1_production_date>
+        <solar_angles zenith="22.493368" azimuth="133.161438" units="degrees"/>
+        <view_angles zenith="3.298454" azimuth="204.329727" units="degrees"/>
+        <product_id>S2A_MSI_L1C_T17RKP_20200426_20200426</product_id>
+        <corner location="UL" latitude="30.695274" longitude="-84.132019"/>
+        <corner location="LR" latitude="29.727591" longitude="-82.966705"/>
+        <bounding_coordinates>
+            <west>-84.132019</west>
+            <east>-82.966705</east>
+            <north>30.717867</north>
+            <south>29.705873</south>
+        </bounding_coordinates>
+        <projection_information projection="UTM" datum="WGS84" units="meters">
+            <corner_point location="UL" x="199980.000000" y="3400020.000000"/>
+            <corner_point location="LR" x="309780.000000" y="3290220.000000"/>
+            <grid_origin>UL</grid_origin>
+            <utm_proj_params>
+                <zone_code>17</zone_code>
+            </utm_proj_params>
+        </projection_information>
+        <orientation_angle>0.000000</orientation_angle>
+    </global_metadata>
+
+    <bands>
+        <band product="MSIL1C" name="B01" category="image" data_type="UINT16" nlines="1830" nsamps="1830" fill_value="0" saturate_value="65535" scale_factor="0.00010000">
+            <short_name>S2MSI1C</short_name>
+            <long_name>band 1 top-of-atmosphere reflectance</long_name>
+            <file_name>S2A_MSI_L1C_T17RKP_20200426_20200426_B01.img</file_name>
+            <pixel_size x="60" y="60" units="meters"/>
+            <resample_method>none</resample_method>
+            <data_units>reflectance</data_units>
+            <valid_range min="0.000000" max="65534.000000"/>
+            <app_version>ESA Payload Data Ground Segment v02.09</app_version>
+            <level1_filename>GRANULE/L1C_T17RKP_A025305_20200426T161838/IMG_DATA/T17RKP_20200426T160901_B01</level1_filename>
+            <production_date>2020-04-26T19:49:30.000000Z</production_date>
+        </band>
+        <band product="MSIL1C" name="B02" category="image" data_type="UINT16" nlines="10980" nsamps="10980" fill_value="0" saturate_value="65535" scale_factor="0.00010000">
+            <short_name>S2MSI1C</short_name>
+            <long_name>band 2 top-of-atmosphere reflectance</long_name>
+            <file_name>S2A_MSI_L1C_T17RKP_20200426_20200426_B02.img</file_name>
+            <pixel_size x="10" y="10" units="meters"/>
+            <resample_method>none</resample_method>
+            <data_units>reflectance</data_units>
+            <valid_range min="0.000000" max="65534.000000"/>
+            <app_version>ESA Payload Data Ground Segment v02.09</app_version>
+            <level1_filename>GRANULE/L1C_T17RKP_A025305_20200426T161838/IMG_DATA/T17RKP_20200426T160901_B02</level1_filename>
+            <production_date>2020-04-26T19:49:30.000000Z</production_date>
+        </band>
+        <band product="MSIL1C" name="B03" category="image" data_type="UINT16" nlines="10980" nsamps="10980" fill_value="0" saturate_value="65535" scale_factor="0.00010000">
+            <short_name>S2MSI1C</short_name>
+            <long_name>band 3 top-of-atmosphere reflectance</long_name>
+            <file_name>S2A_MSI_L1C_T17RKP_20200426_20200426_B03.img</file_name>
+            <pixel_size x="10" y="10" units="meters"/>
+            <resample_method>none</resample_method>
+            <data_units>reflectance</data_units>
+            <valid_range min="0.000000" max="65534.000000"/>
+            <app_version>ESA Payload Data Ground Segment v02.09</app_version>
+            <level1_filename>GRANULE/L1C_T17RKP_A025305_20200426T161838/IMG_DATA/T17RKP_20200426T160901_B03</level1_filename>
+            <production_date>2020-04-26T19:49:30.000000Z</production_date>
+        </band>
+        <band product="MSIL1C" name="B04" category="image" data_type="UINT16" nlines="10980" nsamps="10980" fill_value="0" saturate_value="65535" scale_factor="0.00010000">
+            <short_name>S2MSI1C</short_name>
+            <long_name>band 4 top-of-atmosphere reflectance</long_name>
+            <file_name>S2A_MSI_L1C_T17RKP_20200426_20200426_B04.img</file_name>
+            <pixel_size x="10" y="10" units="meters"/>
+            <resample_method>none</resample_method>
+            <data_units>reflectance</data_units>
+            <valid_range min="0.000000" max="65534.000000"/>
+            <app_version>ESA Payload Data Ground Segment v02.09</app_version>
+            <level1_filename>GRANULE/L1C_T17RKP_A025305_20200426T161838/IMG_DATA/T17RKP_20200426T160901_B04</level1_filename>
+            <production_date>2020-04-26T19:49:30.000000Z</production_date>
+        </band>
+        <band product="MSIL1C" name="B05" category="image" data_type="UINT16" nlines="5490" nsamps="5490" fill_value="0" saturate_value="65535" scale_factor="0.00010000">
+            <short_name>S2MSI1C</short_name>
+            <long_name>band 5 top-of-atmosphere reflectance</long_name>
+            <file_name>S2A_MSI_L1C_T17RKP_20200426_20200426_B05.img</file_name>
+            <pixel_size x="20" y="20" units="meters"/>
+            <resample_method>none</resample_method>
+            <data_units>reflectance</data_units>
+            <valid_range min="0.000000" max="65534.000000"/>
+            <app_version>ESA Payload Data Ground Segment v02.09</app_version>
+            <level1_filename>GRANULE/L1C_T17RKP_A025305_20200426T161838/IMG_DATA/T17RKP_20200426T160901_B05</level1_filename>
+            <production_date>2020-04-26T19:49:30.000000Z</production_date>
+        </band>
+        <band product="MSIL1C" name="B06" category="image" data_type="UINT16" nlines="5490" nsamps="5490" fill_value="0" saturate_value="65535" scale_factor="0.00010000">
+            <short_name>S2MSI1C</short_name>
+            <long_name>band 6 top-of-atmosphere reflectance</long_name>
+            <file_name>S2A_MSI_L1C_T17RKP_20200426_20200426_B06.img</file_name>
+            <pixel_size x="20" y="20" units="meters"/>
+            <resample_method>none</resample_method>
+            <data_units>reflectance</data_units>
+            <valid_range min="0.000000" max="65534.000000"/>
+            <app_version>ESA Payload Data Ground Segment v02.09</app_version>
+            <level1_filename>GRANULE/L1C_T17RKP_A025305_20200426T161838/IMG_DATA/T17RKP_20200426T160901_B06</level1_filename>
+            <production_date>2020-04-26T19:49:30.000000Z</production_date>
+        </band>
+        <band product="MSIL1C" name="B07" category="image" data_type="UINT16" nlines="5490" nsamps="5490" fill_value="0" saturate_value="65535" scale_factor="0.00010000">
+            <short_name>S2MSI1C</short_name>
+            <long_name>band 7 top-of-atmosphere reflectance</long_name>
+            <file_name>S2A_MSI_L1C_T17RKP_20200426_20200426_B07.img</file_name>
+            <pixel_size x="20" y="20" units="meters"/>
+            <resample_method>none</resample_method>
+            <data_units>reflectance</data_units>
+            <valid_range min="0.000000" max="65534.000000"/>
+            <app_version>ESA Payload Data Ground Segment v02.09</app_version>
+            <level1_filename>GRANULE/L1C_T17RKP_A025305_20200426T161838/IMG_DATA/T17RKP_20200426T160901_B07</level1_filename>
+            <production_date>2020-04-26T19:49:30.000000Z</production_date>
+        </band>
+        <band product="MSIL1C" name="B08" category="image" data_type="UINT16" nlines="10980" nsamps="10980" fill_value="0" saturate_value="65535" scale_factor="0.00010000">
+            <short_name>S2MSI1C</short_name>
+            <long_name>band 8 top-of-atmosphere reflectance</long_name>
+            <file_name>S2A_MSI_L1C_T17RKP_20200426_20200426_B08.img</file_name>
+            <pixel_size x="10" y="10" units="meters"/>
+            <resample_method>none</resample_method>
+            <data_units>reflectance</data_units>
+            <valid_range min="0.000000" max="65534.000000"/>
+            <app_version>ESA Payload Data Ground Segment v02.09</app_version>
+            <level1_filename>GRANULE/L1C_T17RKP_A025305_20200426T161838/IMG_DATA/T17RKP_20200426T160901_B08</level1_filename>
+            <production_date>2020-04-26T19:49:30.000000Z</production_date>
+        </band>
+        <band product="MSIL1C" name="B8A" category="image" data_type="UINT16" nlines="5490" nsamps="5490" fill_value="0" saturate_value="65535" scale_factor="0.00010000">
+            <short_name>S2MSI1C</short_name>
+            <long_name>band 8A top-of-atmosphere reflectance</long_name>
+            <file_name>S2A_MSI_L1C_T17RKP_20200426_20200426_B8A.img</file_name>
+            <pixel_size x="20" y="20" units="meters"/>
+            <resample_method>none</resample_method>
+            <data_units>reflectance</data_units>
+            <valid_range min="0.000000" max="65534.000000"/>
+            <app_version>ESA Payload Data Ground Segment v02.09</app_version>
+            <level1_filename>GRANULE/L1C_T17RKP_A025305_20200426T161838/IMG_DATA/T17RKP_20200426T160901_B8A</level1_filename>
+            <production_date>2020-04-26T19:49:30.000000Z</production_date>
+        </band>
+        <band product="MSIL1C" name="B09" category="image" data_type="UINT16" nlines="1830" nsamps="1830" fill_value="0" saturate_value="65535" scale_factor="0.00010000">
+            <short_name>S2MSI1C</short_name>
+            <long_name>band 9 top-of-atmosphere reflectance</long_name>
+            <file_name>S2A_MSI_L1C_T17RKP_20200426_20200426_B09.img</file_name>
+            <pixel_size x="60" y="60" units="meters"/>
+            <resample_method>none</resample_method>
+            <data_units>reflectance</data_units>
+            <valid_range min="0.000000" max="65534.000000"/>
+            <app_version>ESA Payload Data Ground Segment v02.09</app_version>
+            <level1_filename>GRANULE/L1C_T17RKP_A025305_20200426T161838/IMG_DATA/T17RKP_20200426T160901_B09</level1_filename>
+            <production_date>2020-04-26T19:49:30.000000Z</production_date>
+        </band>
+        <band product="MSIL1C" name="B10" category="image" data_type="UINT16" nlines="1830" nsamps="1830" fill_value="0" saturate_value="65535" scale_factor="0.00010000">
+            <short_name>S2MSI1C</short_name>
+            <long_name>band 10 top-of-atmosphere reflectance</long_name>
+            <file_name>S2A_MSI_L1C_T17RKP_20200426_20200426_B10.img</file_name>
+            <pixel_size x="60" y="60" units="meters"/>
+            <resample_method>none</resample_method>
+            <data_units>reflectance</data_units>
+            <valid_range min="0.000000" max="65534.000000"/>
+            <app_version>ESA Payload Data Ground Segment v02.09</app_version>
+            <level1_filename>GRANULE/L1C_T17RKP_A025305_20200426T161838/IMG_DATA/T17RKP_20200426T160901_B10</level1_filename>
+            <production_date>2020-04-26T19:49:30.000000Z</production_date>
+        </band>
+        <band product="MSIL1C" name="B11" category="image" data_type="UINT16" nlines="5490" nsamps="5490" fill_value="0" saturate_value="65535" scale_factor="0.00010000">
+            <short_name>S2MSI1C</short_name>
+            <long_name>band 11 top-of-atmosphere reflectance</long_name>
+            <file_name>S2A_MSI_L1C_T17RKP_20200426_20200426_B11.img</file_name>
+            <pixel_size x="20" y="20" units="meters"/>
+            <resample_method>none</resample_method>
+            <data_units>reflectance</data_units>
+            <valid_range min="0.000000" max="65534.000000"/>
+            <app_version>ESA Payload Data Ground Segment v02.09</app_version>
+            <level1_filename>GRANULE/L1C_T17RKP_A025305_20200426T161838/IMG_DATA/T17RKP_20200426T160901_B11</level1_filename>
+            <production_date>2020-04-26T19:49:30.000000Z</production_date>
+        </band>
+        <band product="MSIL1C" name="B12" category="image" data_type="UINT16" nlines="5490" nsamps="5490" fill_value="0" saturate_value="65535" scale_factor="0.00010000">
+            <short_name>S2MSI1C</short_name>
+            <long_name>band 12 top-of-atmosphere reflectance</long_name>
+            <file_name>S2A_MSI_L1C_T17RKP_20200426_20200426_B12.img</file_name>
+            <pixel_size x="20" y="20" units="meters"/>
+            <resample_method>none</resample_method>
+            <data_units>reflectance</data_units>
+            <valid_range min="0.000000" max="65534.000000"/>
+            <app_version>ESA Payload Data Ground Segment v02.09</app_version>
+            <level1_filename>GRANULE/L1C_T17RKP_A025305_20200426T161838/IMG_DATA/T17RKP_20200426T160901_B12</level1_filename>
+            <production_date>2020-04-26T19:49:30.000000Z</production_date>
+        </band>
+        <band product="sr_refl" name="sr_band1" category="image" data_type="UINT16" nlines="10980" nsamps="10980" fill_value="0" scale_factor="0.00002750" add_offset="-0.200000">
+            <short_name>S2MSI1CSR</short_name>
+            <long_name>band 1 surface reflectance</long_name>
+            <file_name>S2A_MSI_L1C_T17RKP_20200426_20200426_sr_band1.img</file_name>
+            <pixel_size x="10" y="10" units="meters"/>
+            <resample_method>none</resample_method>
+            <data_units>reflectance</data_units>
+            <valid_range min="0.000000" max="65454.545455"/>
+            <app_version>LaSRC_3.0.3 (Collection 2)</app_version>
+            <level1_filename>GRANULE/L1C_T17RKP_A025305_20200426T161838/IMG_DATA/T17RKP_20200426T160901_B01</level1_filename>
+            <production_date>2020-09-14T21:12:02Z</production_date>
+        </band>
+        <band product="sr_refl" name="sr_band2" category="image" data_type="UINT16" nlines="10980" nsamps="10980" fill_value="0" scale_factor="0.00002750" add_offset="-0.200000">
+            <short_name>S2MSI1CSR</short_name>
+            <long_name>band 2 surface reflectance</long_name>
+            <file_name>S2A_MSI_L1C_T17RKP_20200426_20200426_sr_band2.img</file_name>
+            <pixel_size x="10" y="10" units="meters"/>
+            <resample_method>none</resample_method>
+            <data_units>reflectance</data_units>
+            <valid_range min="0.000000" max="65454.545455"/>
+            <app_version>LaSRC_3.0.3 (Collection 2)</app_version>
+            <level1_filename>GRANULE/L1C_T17RKP_A025305_20200426T161838/IMG_DATA/T17RKP_20200426T160901_B01</level1_filename>
+            <production_date>2020-09-14T21:12:02Z</production_date>
+        </band>
+        <band product="sr_refl" name="sr_band3" category="image" data_type="UINT16" nlines="10980" nsamps="10980" fill_value="0" scale_factor="0.00002750" add_offset="-0.200000">
+            <short_name>S2MSI1CSR</short_name>
+            <long_name>band 3 surface reflectance</long_name>
+            <file_name>S2A_MSI_L1C_T17RKP_20200426_20200426_sr_band3.img</file_name>
+            <pixel_size x="10" y="10" units="meters"/>
+            <resample_method>none</resample_method>
+            <data_units>reflectance</data_units>
+            <valid_range min="0.000000" max="65454.545455"/>
+            <app_version>LaSRC_3.0.3 (Collection 2)</app_version>
+            <level1_filename>GRANULE/L1C_T17RKP_A025305_20200426T161838/IMG_DATA/T17RKP_20200426T160901_B01</level1_filename>
+            <production_date>2020-09-14T21:12:02Z</production_date>
+        </band>
+        <band product="sr_refl" name="sr_band4" category="image" data_type="UINT16" nlines="10980" nsamps="10980" fill_value="0" scale_factor="0.00002750" add_offset="-0.200000">
+            <short_name>S2MSI1CSR</short_name>
+            <long_name>band 4 surface reflectance</long_name>
+            <file_name>S2A_MSI_L1C_T17RKP_20200426_20200426_sr_band4.img</file_name>
+            <pixel_size x="10" y="10" units="meters"/>
+            <resample_method>none</resample_method>
+            <data_units>reflectance</data_units>
+            <valid_range min="0.000000" max="65454.545455"/>
+            <app_version>LaSRC_3.0.3 (Collection 2)</app_version>
+            <level1_filename>GRANULE/L1C_T17RKP_A025305_20200426T161838/IMG_DATA/T17RKP_20200426T160901_B01</level1_filename>
+            <production_date>2020-09-14T21:12:02Z</production_date>
+        </band>
+        <band product="sr_refl" name="sr_band5" category="image" data_type="UINT16" nlines="10980" nsamps="10980" fill_value="0" scale_factor="0.00002750" add_offset="-0.200000">
+            <short_name>S2MSI1CSR</short_name>
+            <long_name>band 5 surface reflectance</long_name>
+            <file_name>S2A_MSI_L1C_T17RKP_20200426_20200426_sr_band5.img</file_name>
+            <pixel_size x="10" y="10" units="meters"/>
+            <resample_method>none</resample_method>
+            <data_units>reflectance</data_units>
+            <valid_range min="0.000000" max="65454.545455"/>
+            <app_version>LaSRC_3.0.3 (Collection 2)</app_version>
+            <level1_filename>GRANULE/L1C_T17RKP_A025305_20200426T161838/IMG_DATA/T17RKP_20200426T160901_B01</level1_filename>
+            <production_date>2020-09-14T21:12:02Z</production_date>
+        </band>
+        <band product="sr_refl" name="sr_band6" category="image" data_type="UINT16" nlines="10980" nsamps="10980" fill_value="0" scale_factor="0.00002750" add_offset="-0.200000">
+            <short_name>S2MSI1CSR</short_name>
+            <long_name>band 6 surface reflectance</long_name>
+            <file_name>S2A_MSI_L1C_T17RKP_20200426_20200426_sr_band6.img</file_name>
+            <pixel_size x="10" y="10" units="meters"/>
+            <resample_method>none</resample_method>
+            <data_units>reflectance</data_units>
+            <valid_range min="0.000000" max="65454.545455"/>
+            <app_version>LaSRC_3.0.3 (Collection 2)</app_version>
+            <level1_filename>GRANULE/L1C_T17RKP_A025305_20200426T161838/IMG_DATA/T17RKP_20200426T160901_B01</level1_filename>
+            <production_date>2020-09-14T21:12:02Z</production_date>
+        </band>
+        <band product="sr_refl" name="sr_band7" category="image" data_type="UINT16" nlines="10980" nsamps="10980" fill_value="0" scale_factor="0.00002750" add_offset="-0.200000">
+            <short_name>S2MSI1CSR</short_name>
+            <long_name>band 7 surface reflectance</long_name>
+            <file_name>S2A_MSI_L1C_T17RKP_20200426_20200426_sr_band7.img</file_name>
+            <pixel_size x="10" y="10" units="meters"/>
+            <resample_method>none</resample_method>
+            <data_units>reflectance</data_units>
+            <valid_range min="0.000000" max="65454.545455"/>
+            <app_version>LaSRC_3.0.3 (Collection 2)</app_version>
+            <level1_filename>GRANULE/L1C_T17RKP_A025305_20200426T161838/IMG_DATA/T17RKP_20200426T160901_B01</level1_filename>
+            <production_date>2020-09-14T21:12:02Z</production_date>
+        </band>
+        <band product="sr_refl" name="sr_band8" category="image" data_type="UINT16" nlines="10980" nsamps="10980" fill_value="0" scale_factor="0.00002750" add_offset="-0.200000">
+            <short_name>S2MSI1CSR</short_name>
+            <long_name>band 8 surface reflectance</long_name>
+            <file_name>S2A_MSI_L1C_T17RKP_20200426_20200426_sr_band8.img</file_name>
+            <pixel_size x="10" y="10" units="meters"/>
+            <resample_method>none</resample_method>
+            <data_units>reflectance</data_units>
+            <valid_range min="0.000000" max="65454.545455"/>
+            <app_version>LaSRC_3.0.3 (Collection 2)</app_version>
+            <level1_filename>GRANULE/L1C_T17RKP_A025305_20200426T161838/IMG_DATA/T17RKP_20200426T160901_B01</level1_filename>
+            <production_date>2020-09-14T21:12:02Z</production_date>
+        </band>
+        <band product="sr_refl" name="sr_band8a" category="image" data_type="UINT16" nlines="10980" nsamps="10980" fill_value="0" scale_factor="0.00002750" add_offset="-0.200000">
+            <short_name>S2MSI1CSR</short_name>
+            <long_name>band 8a surface reflectance</long_name>
+            <file_name>S2A_MSI_L1C_T17RKP_20200426_20200426_sr_band8a.img</file_name>
+            <pixel_size x="10" y="10" units="meters"/>
+            <resample_method>none</resample_method>
+            <data_units>reflectance</data_units>
+            <valid_range min="0.000000" max="65454.545455"/>
+            <app_version>LaSRC_3.0.3 (Collection 2)</app_version>
+            <level1_filename>GRANULE/L1C_T17RKP_A025305_20200426T161838/IMG_DATA/T17RKP_20200426T160901_B01</level1_filename>
+            <production_date>2020-09-14T21:12:02Z</production_date>
+        </band>
+        <band product="sr_refl" name="sr_band9" category="image" data_type="UINT16" nlines="10980" nsamps="10980" fill_value="0" scale_factor="0.00002750" add_offset="-0.200000">
+            <short_name>S2MSI1CSR</short_name>
+            <long_name>band 9 surface reflectance</long_name>
+            <file_name>S2A_MSI_L1C_T17RKP_20200426_20200426_sr_band9.img</file_name>
+            <pixel_size x="10" y="10" units="meters"/>
+            <resample_method>none</resample_method>
+            <data_units>reflectance</data_units>
+            <valid_range min="0.000000" max="65454.545455"/>
+            <app_version>LaSRC_3.0.3 (Collection 2)</app_version>
+            <level1_filename>GRANULE/L1C_T17RKP_A025305_20200426T161838/IMG_DATA/T17RKP_20200426T160901_B01</level1_filename>
+            <production_date>2020-09-14T21:12:02Z</production_date>
+        </band>
+        <band product="sr_refl" name="sr_band10" category="image" data_type="UINT16" nlines="10980" nsamps="10980" fill_value="0" scale_factor="0.00002750" add_offset="-0.200000">
+            <short_name>S2MSI1CSR</short_name>
+            <long_name>band 10 surface reflectance</long_name>
+            <file_name>S2A_MSI_L1C_T17RKP_20200426_20200426_sr_band10.img</file_name>
+            <pixel_size x="10" y="10" units="meters"/>
+            <resample_method>none</resample_method>
+            <data_units>reflectance</data_units>
+            <valid_range min="0.000000" max="65454.545455"/>
+            <app_version>LaSRC_3.0.3 (Collection 2)</app_version>
+            <level1_filename>GRANULE/L1C_T17RKP_A025305_20200426T161838/IMG_DATA/T17RKP_20200426T160901_B01</level1_filename>
+            <production_date>2020-09-14T21:12:02Z</production_date>
+        </band>
+        <band product="sr_refl" name="sr_band11" category="image" data_type="UINT16" nlines="10980" nsamps="10980" fill_value="0" scale_factor="0.00002750" add_offset="-0.200000">
+            <short_name>S2MSI1CSR</short_name>
+            <long_name>band 11 surface reflectance</long_name>
+            <file_name>S2A_MSI_L1C_T17RKP_20200426_20200426_sr_band11.img</file_name>
+            <pixel_size x="10" y="10" units="meters"/>
+            <resample_method>none</resample_method>
+            <data_units>reflectance</data_units>
+            <valid_range min="0.000000" max="65454.545455"/>
+            <app_version>LaSRC_3.0.3 (Collection 2)</app_version>
+            <level1_filename>GRANULE/L1C_T17RKP_A025305_20200426T161838/IMG_DATA/T17RKP_20200426T160901_B01</level1_filename>
+            <production_date>2020-09-14T21:12:02Z</production_date>
+        </band>
+        <band product="sr_refl" name="sr_band12" category="image" data_type="UINT16" nlines="10980" nsamps="10980" fill_value="0" scale_factor="0.00002750" add_offset="-0.200000">
+            <short_name>S2MSI1CSR</short_name>
+            <long_name>band 12 surface reflectance</long_name>
+            <file_name>S2A_MSI_L1C_T17RKP_20200426_20200426_sr_band12.img</file_name>
+            <pixel_size x="10" y="10" units="meters"/>
+            <resample_method>none</resample_method>
+            <data_units>reflectance</data_units>
+            <valid_range min="0.000000" max="65454.545455"/>
+            <app_version>LaSRC_3.0.3 (Collection 2)</app_version>
+            <level1_filename>GRANULE/L1C_T17RKP_A025305_20200426T161838/IMG_DATA/T17RKP_20200426T160901_B01</level1_filename>
+            <production_date>2020-09-14T21:12:02Z</production_date>
+        </band>
+        <band product="sr_refl" name="sr_aerosol" category="qa" data_type="UINT8" nlines="10980" nsamps="10980" fill_value="1">
+            <short_name>S2MSI1CAERO</short_name>
+            <long_name>surface reflectance aerosol mask</long_name>
+            <file_name>S2A_MSI_L1C_T17RKP_20200426_20200426_sr_aerosol.img</file_name>
+            <pixel_size x="10" y="10" units="meters"/>
+            <resample_method>none</resample_method>
+            <data_units>quality/feature classification</data_units>
+            <bitmap_description>
+                <bit num="0">fill</bit>
+                <bit num="1">valid land aerosol retrieval</bit>
+                <bit num="2">valid water aerosol retrieval</bit>
+                <bit num="3">failed aerosol retrieval</bit>
+                <bit num="4">aerosol retrieval value was interpolated or "fixed" from surrounding aerosols</bit>
+                <bit num="5">not used</bit>
+                <bit num="6">aerosol level</bit>
+                <bit num="7">aerosol level</bit>
+            </bitmap_description>
+            <app_version>LaSRC_3.0.3 (Collection 2)</app_version>
+            <production_date>2020-09-14T21:12:02Z</production_date>
+        </band>
+    </bands>
+</espa_metadata>

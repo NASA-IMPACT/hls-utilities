@@ -30,7 +30,7 @@ def test_parse_fmask_valid():
         or calculate TOA reflectances.
         potential clouds, cloud shadows, snow, and water.
         clear pixel in this image (clear-sky pixels = 102Fmask 4.2 finished (3.95 minutes)
-        for L1C_T37WFN_A017436_20200708T084600 with 0.00% clear pixels
+        for L1C_T37WFN_A017436_20200708T084600 with 99.01% clear pixels
         Input file size is 5490, 5490
         0...10...20...30...40...50...60...70...80...90...100 - done."""
 
@@ -39,4 +39,4 @@ def test_parse_fmask_valid():
         fmaskoutput
     ], catch_exceptions=False)
     assert result.exit_code == 0
-    assert result.stdout == "invalid\n"
+    assert result.stdout == "valid\n"
