@@ -16,5 +16,6 @@ setup(
         "check_solar_zenith_sentinel=check_solar_zenith_sentinel.check_solar_zenith_sentinel:main",
         "get_s2_granule_dir=get_s2_granule_dir.get_s2_granule_dir:main",
         "get_doy=get_doy.get_doy:main",
+        "create_sr_hdf_xml=create_sr_hdf_xml.create_sr_hdf_xml:main",
     ]},
 )
