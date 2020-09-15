@@ -6,16 +6,16 @@
 $ check_solar_zenith_sentinel INPUTXML
 ```
 ```bash
-$ create_sr_hdf_xml [OPTIONS] INPUTXMLFILE OUTPUTXMLFILE [one|two]
+$ create_sr_hdf_xml INPUTXMLFILE OUTPUTXMLFILE [one|two]
 ```
 ```bash
-$ get_doy [OPTIONS] YEAR MONTH DAY
+$ get_doy YEAR MONTH DAY
 ```
 ```bash
-$ get_s2_granule_dir [OPTIONS] INPUTS2DIR
+$ get_s2_granule_dir INPUTS2DIR
 ```
 ```bash
-$ parse_fmask [OPTIONS] FMASKOUTPUT
+$ parse_fmask FMASKOUTPUT
 ```
 
 
