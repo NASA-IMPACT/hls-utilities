@@ -1,4 +1,5 @@
 import click
+import re
 
 
 @click.command()
@@ -7,11 +8,16 @@ import click
     type=click.STRING,
 )
 def main(fmaskoutput):
-    lines = fmaskoutput.splitlines()
-    if "0.00%" in lines[len(lines) - 3]:
-        click.echo("invalid")
-    else:
+    result = re.search(r"\d+%|([0-9]\d?)\.\d", fmaskoutput)
+    if result is None:
         click.echo("valid")
+    else:
+        clear_percentage = result.group()
+        value = float(clear_percentage)
+        if value < 2:
+            click.echo("invalid")
+        else:
+            click.echo("valid")
 
 
 if __name__ == "__main__":
