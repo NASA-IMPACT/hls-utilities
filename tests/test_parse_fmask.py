@@ -33,3 +33,14 @@ def test_parse_fmask_no_percent():
     ], catch_exceptions=False)
     assert result.exit_code == 0
     assert result.stdout == "valid\n"
+
+
+def test_parse_fmask_100_percent():
+    fmaskoutput = "for L1C_T23XNB_A017440_20200708T152810 with 100.00% clear pixels"
+
+    runner = CliRunner(echo_stdin=True)
+    result = runner.invoke(main, [
+        fmaskoutput
+    ], catch_exceptions=False)
+    assert result.exit_code == 0
+    assert result.stdout == "valid\n"
