@@ -1,5 +1,4 @@
 import click
-import re
 
 
 @click.command()
@@ -8,16 +7,18 @@ import re
     type=click.STRING,
 )
 def main(fmaskoutput):
-    result = re.search(r"\d+%|([0-9]\d?)\.\d", fmaskoutput)
-    if result is None:
-        click.echo("valid")
-    else:
-        clear_percentage = result.group()
+    left = fmaskoutput.split("%")[0]
+    spaced = left.split(" ")
+    clear_percentage = spaced[len(spaced) - 1]
+    try:
         value = float(clear_percentage)
-        if value < 2:
-            click.echo("invalid")
-        else:
-            click.echo("valid")
+    except ValueError:
+        value = 50
+
+    if value < 2:
+        click.echo("invalid")
+    else:
+        click.echo("valid")
 
 
 if __name__ == "__main__":
