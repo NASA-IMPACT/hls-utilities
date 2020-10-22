@@ -1,5 +1,5 @@
 import click
-from .mtlutils import parsemeta
+from check_solar_zenith_landsat.mtlutils import parsemeta
 
 
 @click.command()
