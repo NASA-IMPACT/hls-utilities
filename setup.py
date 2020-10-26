@@ -14,8 +14,10 @@ setup(
     entry_points={"console_scripts": [
         "parse_fmask=parse_fmask.parse_fmask:main",
         "check_solar_zenith_sentinel=check_solar_zenith_sentinel.check_solar_zenith_sentinel:main",
+        "check_solar_zenith_landsat=check_solar_zenith_landsat.check_solar_zenith_landsat:main",
         "get_s2_granule_dir=get_s2_granule_dir.get_s2_granule_dir:main",
         "get_doy=get_doy.get_doy:main",
         "create_sr_hdf_xml=create_sr_hdf_xml.create_sr_hdf_xml:main",
+        "create_landsat_sr_hdf_xml=create_landsat_sr_hdf_xml.create_landsat_sr_hdf_xml:main",
     ]},
 )

@@ -6,7 +6,13 @@
 $ check_solar_zenith_sentinel INPUTXML
 ```
 ```bash
+$ check_solar_zenith_landsat INPUTXML
+```
+```bash
 $ create_sr_hdf_xml INPUTXMLFILE OUTPUTXMLFILE [one|two]
+```
+```bash
+$ create_landsat_sr_hdf_xml INPUTXMLFILE OUTPUTXMLFILE
 ```
 ```bash
 $ get_doy YEAR MONTH DAY
