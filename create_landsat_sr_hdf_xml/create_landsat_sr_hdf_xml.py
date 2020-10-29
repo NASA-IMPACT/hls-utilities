@@ -40,7 +40,7 @@ def main(inputxmlfile, outputxmlfile,):
         elif band.get('name') == 'radsat_qa':
             band.set('name', 'bandQA')
             band.set('product', hls_product)
-        elif band.get('name') == 'b9':
+        elif band.get('name') == 'toa_band9':
             band.set('name', 'band09')
             band.set('product', hls_product)
         elif band.get('name') == 'bt_band10':
