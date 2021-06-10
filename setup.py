@@ -5,7 +5,7 @@ setup(
     version="0.1",
     packages=find_packages(),
     install_requires=[
-        "click",
+        "click~=7.1.0",
         "lxml",
         "espa-python-library @ git+https://github.com/USGS-EROS/espa-python-library.git@v2.0.0#egg=espa-python-library"
     ],
