@@ -7,10 +7,14 @@ setup(
     install_requires=[
         "click~=7.1.0",
         "lxml",
+        "boto3~=1.17.91",
         "espa-python-library @ git+https://github.com/USGS-EROS/espa-python-library.git@v2.0.0#egg=espa-python-library"
     ],
     include_package_data=True,
-    extras_require={"dev": ["flake8", "black"], "test": ["flake8", "pytest"]},
+    extras_require={
+        "dev": ["flake8", "black"],
+        "test": ["flake8", "pytest", "Jinja2==2.10.1", "moto[s3]~=2.0.8"]
+    },
     entry_points={"console_scripts": [
         "parse_fmask=parse_fmask.parse_fmask:main",
         "check_solar_zenith_sentinel=check_solar_zenith_sentinel.check_solar_zenith_sentinel:main",
@@ -20,5 +24,6 @@ setup(
         "create_sr_hdf_xml=create_sr_hdf_xml.create_sr_hdf_xml:main",
         "create_landsat_sr_hdf_xml=create_landsat_sr_hdf_xml.create_landsat_sr_hdf_xml:main",
         "check_sentinel_clouds=check_sentinel_clouds.check_sentinel_clouds:main",
+        "download_landsat=download_landsat.download_landsat:main",
     ]},
 )

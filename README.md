@@ -23,6 +23,9 @@ $ get_s2_granule_dir INPUTS2DIR
 ```bash
 $ parse_fmask FMASKOUTPUT
 ```
+```bash
+$ download_landsat BUCKET PATH OUTPUT_DIRECTORY  
+```
 
 
 ### Tests
