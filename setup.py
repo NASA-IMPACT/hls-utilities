@@ -24,5 +24,6 @@ setup(
         "create_sr_hdf_xml=create_sr_hdf_xml.create_sr_hdf_xml:main",
         "create_landsat_sr_hdf_xml=create_landsat_sr_hdf_xml.create_landsat_sr_hdf_xml:main",
         "check_sentinel_clouds=check_sentinel_clouds.check_sentinel_clouds:main",
+        "download_landsat=download_landsat.download_landsat:main",
     ]},
 )

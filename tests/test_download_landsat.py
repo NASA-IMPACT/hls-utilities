@@ -2,8 +2,9 @@ import os
 import io
 import pytest
 import boto3
+from click.testing import CliRunner
 from moto import mock_s3
-from download_landsat.download_landsat import get_landsat
+from download_landsat.download_landsat import get_landsat, main
 from download_landsat.download_landsat import KeyDoesNotExist
 
 BUCKET = "usgs-landsat1"
@@ -31,15 +32,15 @@ def aws_credentials():
 @pytest.fixture(scope="function")
 def s3(aws_credentials):
     with mock_s3():
-        s3 = boto3.client("s3", region_name="us-east-1")
-        s3.create_bucket(Bucket=BUCKET)
-        s3.put_bucket_request_payment(
+        client = boto3.client("s3", region_name="us-east-1")
+        client.create_bucket(Bucket=BUCKET)
+        client.put_bucket_request_payment(
             Bucket=BUCKET,
             RequestPaymentConfiguration={
                 "Payer": "Requester"
             },
         )
-        yield s3
+        yield client
 
 
 def test_download(s3, tmp_path):
@@ -61,3 +62,13 @@ def test_download_updated_tier(s3, tmp_path):
     s3.upload_fileobj(fo, BUCKET, f"{T1_KEY}/{filename}")
     get_landsat(BUCKET, RT_KEY, str(tmp_path))
     assert os.path.isfile(tmp_path.joinpath(filename))
+
+
+def test_download_landsat_cli(s3, tmp_path):
+    fo = io.BytesIO(b"file object in RAM")
+    filename = "rt.json"
+    s3.upload_fileobj(fo, BUCKET, f"{RT_KEY}/{filename}")
+
+    runner = CliRunner(echo_stdin=True)
+    result = runner.invoke(main, [BUCKET, RT_KEY, str(tmp_path)])
+    assert result.exit_code == 0

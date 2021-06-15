@@ -1,4 +1,5 @@
 import boto3
+import click
 from pathlib import Path
 
 
@@ -19,7 +20,6 @@ def key_exists(client, bucket, path):
 
 
 def download_files(client, bucket, path, output_directory):
-    print(output_directory)
     result = client.list_objects_v2(
         Bucket=bucket,
         Prefix=path,
@@ -63,3 +63,20 @@ def get_landsat(bucket, path, output_directory):
     else:
         updated_path = get_updated_key(client, bucket, path)
         download_files(client, bucket, updated_path, output_directory)
+
+
+@click.command()
+@click.argument(
+    "bucket",
+    type=click.STRING
+)
+@click.argument(
+    "path",
+    type=click.STRING,
+)
+@click.argument(
+    "output_directory",
+    type=click.Path(),
+)
+def main(bucket, path, output_directory):
+    get_landsat(bucket, path, output_directory)
