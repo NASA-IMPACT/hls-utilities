@@ -60,9 +60,13 @@ def get_landsat(bucket, path, output_directory):
     client = boto3.client("s3")
     if(key_exists(client, bucket, path)):
         download_files(client, bucket, path, output_directory)
+        id = Path(path).parts[-1]
+        return id
     else:
         updated_path = get_updated_key(client, bucket, path)
         download_files(client, bucket, updated_path, output_directory)
+        updated_id = Path(updated_path).parts[-1]
+        return updated_id
 
 
 @click.command()
@@ -79,4 +83,5 @@ def get_landsat(bucket, path, output_directory):
     type=click.Path(),
 )
 def main(bucket, path, output_directory):
-    get_landsat(bucket, path, output_directory)
+    id = get_landsat(bucket, path, output_directory)
+    click.echo(id)
