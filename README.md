@@ -26,6 +26,12 @@ $ parse_fmask FMASKOUTPUT
 ```bash
 $ download_landsat BUCKET PATH OUTPUT_DIRECTORY  
 ```
+```bash
+$ get_detector_footprint INPUTS2DIR
+```
+```bash
+$ get_detector_footprint_extension INPUTS2DIR
+```
 
 
 ### Tests
