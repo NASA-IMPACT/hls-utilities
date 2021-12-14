@@ -1,38 +1,37 @@
 import os
+import pytest
 from click.testing import CliRunner
 from get_detector_footprint.get_detector_footprint import main
 
 
-current_dir = os.path.dirname(__file__)
-test_dir = os.path.join(current_dir, "data")
+safedirectory = "S2A_MSIL1C_20210708T184921_N0301_R113_T11VNF_20210708T222235.SAFE"
 
 
-def test_get_detector_footprint():
+def test_get_detector_footprint_gml(tmpdir):
     runner = CliRunner(echo_stdin=True)
-    inputs2dir = os.path.join(
-        test_dir,
-        "S2A_MSIL1C_20210708T184921_N0301_R113_T11VNF_20210708T222235.SAFE",
-    )
-    expected = os.path.join(
-        test_dir,
-        "S2A_MSIL1C_20210708T184921_N0301_R113_T11VNF_20210708T222235.SAFE/"
-        "GRANULE/L1C_T11VNF_A031570_20210708T185756/QI_DATA/DETFOO_B06.gml\n",
-    )
-    result = runner.invoke(main, [
-        inputs2dir
-    ], catch_exceptions=False)
-    assert result.stdout == expected
+    safe_path = os.path.join(tmpdir, safedirectory)
+    fake_safe = tmpdir.mkdir(safedirectory).mkdir("GRANULE") \
+        .mkdir("L1C_T11VNF_A031570_20210708T185756").mkdir("QI_DATA")
+    fake_detfoo = fake_safe.join("DETFOO_B06.gml")
+    fake_detfoo.write("content")
+    result = runner.invoke(main, [safe_path], catch_exceptions=False)
+    assert result.stdout == fake_detfoo + "\n"
 
-    inputs2dir = os.path.join(
-        test_dir,
-        "S2A_MSIL1C_20210708T184921_N0301_R113_T11VNF_20210708T222236.SAFE",
-    )
-    expected = os.path.join(
-        test_dir,
-        "S2A_MSIL1C_20210708T184921_N0301_R113_T11VNF_20210708T222236.SAFE/"
-        "GRANULE/L1C_T11VNF_A031570_20210708T185756/QI_DATA/DETFOO_B06.jp2\n",
-    )
-    result = runner.invoke(main, [
-        inputs2dir
-    ], catch_exceptions=False)
-    assert result.stdout == expected
+
+def test_get_detector_footprint_jp2(tmpdir):
+    runner = CliRunner(echo_stdin=True)
+    safe_path = os.path.join(tmpdir, safedirectory)
+    fake_safe = tmpdir.mkdir(safedirectory).mkdir("GRANULE") \
+        .mkdir("L1C_T11VNF_A031570_20210708T185756").mkdir("QI_DATA")
+    fake_detfoo = fake_safe.join("DETFOO_B06.jp2")
+    fake_detfoo.write("content")
+    result = runner.invoke(main, [safe_path], catch_exceptions=False)
+    assert result.stdout == fake_detfoo + "\n"
+
+
+def test_get_detector_footprint_invalid(tmpdir):
+    runner = CliRunner(echo_stdin=True)
+    safe_path = os.path.join(tmpdir, safedirectory)
+
+    with pytest.raises(FileNotFoundError):
+        runner.invoke(main, [safe_path], catch_exceptions=False)
