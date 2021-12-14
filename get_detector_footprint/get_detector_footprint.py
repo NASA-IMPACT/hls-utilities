@@ -14,11 +14,11 @@ def main(inputs2dir):
     granule_dir = os.path.join(inputs2dir, 'GRANULE')
 
     # check if it is an old format SAFE directory
-    gml_path = glob.glob("{}/*/QI_DATA/DETFOO_B06.gml".format(granule_dir))
+    gml_path = glob.glob("{}/*/QI_DATA/MSK_DETFOO_B06.gml".format(granule_dir))
     if len(gml_path) > 0:
         detfoo = gml_path[0]
 
-    jp2_path = glob.glob("{}/*/QI_DATA/DETFOO_B06.jp2".format(granule_dir))
+    jp2_path = glob.glob("{}/*/QI_DATA/MSK_DETFOO_B06.jp2".format(granule_dir))
     if len(jp2_path) > 0:
         detfoo = jp2_path[0]
 
