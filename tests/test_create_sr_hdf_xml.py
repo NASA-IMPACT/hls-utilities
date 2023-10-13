@@ -1,11 +1,18 @@
 import os
 import lxml
+import pytest
 from click.testing import CliRunner
 from create_sr_hdf_xml.create_sr_hdf_xml import main
 
 
 current_dir = os.path.dirname(__file__)
 test_dir = os.path.join(current_dir, "data")
+
+
+@pytest.fixture(scope="session", autouse=True)
+def set_env():
+    os.environ["ESPA_SCHEMA"] = os.path.join(test_dir,
+                                             "espa_internal_metadata_v2_2.xsd")
 
 
 def test_create_sr_hdf_xml_one(tmpdir):
