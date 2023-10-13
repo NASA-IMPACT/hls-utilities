@@ -49,7 +49,7 @@ def main(inputxmlfile, outputxmlfile,):
         elif band.get('name') == 'bt_band11':
             band.set('name', 'band11')
             band.set('product', hls_product)
-        elif band.get('name') == 'sr_aerosol':
+        elif band.get('name') == 'sr_aerosol_qa':
             band.set('name', 'CLOUD')
             band.set('product', hls_product)
 

@@ -346,7 +346,7 @@ xsi:schemaLocation="http://espa.cr.usgs.gov/v2 http://espa.cr.usgs.gov/schema/es
             <level1_filename>GRANULE/L1C_T17RKP_A025305_20200426T161838/IMG_DATA/T17RKP_20200426T160901_B01</level1_filename>
             <production_date>2020-09-14T21:12:02Z</production_date>
         </band>
-        <band product="sr_refl" name="sr_aerosol" category="qa" data_type="UINT8" nlines="10980" nsamps="10980" fill_value="1">
+        <band product="sr_refl" name="sr_aerosol_qa" category="qa" data_type="UINT8" nlines="10980" nsamps="10980" fill_value="1">
             <short_name>S2MSI1CAERO</short_name>
             <long_name>surface reflectance aerosol mask</long_name>
             <file_name>S2A_MSI_L1C_T17RKP_20200426_20200426_sr_aerosol.img</file_name>
