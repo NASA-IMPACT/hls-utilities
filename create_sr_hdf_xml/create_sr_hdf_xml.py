@@ -62,7 +62,7 @@ def main(inputxmlfile, outputxmlfile, hdffile):
             elif band.get('name') == 'sr_band12':
                 band.set('name', 'band12')
                 band.set('product', hls_product)
-            elif band.get('name') == 'sr_aerosol':
+            elif band.get('name') == 'sr_aerosol_qa':
                 band.set('name', 'CLOUD')
                 band.set('product', hls_product)
 
