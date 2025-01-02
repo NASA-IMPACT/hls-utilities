@@ -5,21 +5,16 @@ import click
 import rasterio
 
 
-# FIXME: restrict this to bands that are used by HLS
+# MSI band number definitions for bands used by HLS v2 product
+# (coastal, blue/green/red, NIR, SWIR1, SWIR2)
 SPECTRAL_BANDS = frozenset({
     "B01",
     "B02",
     "B03",
     "B04",
-    "B05",
-    "B06",
-    "B07",
-    "B08",
-    "B09",
-    "B10",
+    "B8A",
     "B11",
     "B12",
-    "B8A",
 })
 
 
