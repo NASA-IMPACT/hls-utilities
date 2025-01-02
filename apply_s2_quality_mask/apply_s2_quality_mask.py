@@ -17,6 +17,14 @@ SPECTRAL_BANDS = frozenset({
     "B12",
 })
 
+# ensure compression is lossless to avoid changing values,
+# https://gdal.org/en/stable/drivers/raster/jp2openjpeg.html#lossless-compression
+JPEG2000_NO_COMPRESSION_OPTIONS = {
+    "QUALITY": "100",
+    "REVERSIBLE": "YES",
+    "YCBCR420": "NO",
+}
+
 
 def _one_or_none(paths: List[Path]) -> Optional[Path]:
     if len(paths) == 1:
@@ -97,13 +105,13 @@ def apply_quality_mask(image: Path, mask: Path):
     # only update imagery if mask shows it has any bad pixels
     if lost_degraded_mask.any():
         click.echo(f"Masking lost or degraded pixel values in {image}")
-        with rasterio.open(image, "r+") as img_src:
+        with rasterio.open(image, "r+", **JPEG2000_NO_COMPRESSION_OPTIONS) as img_src:
             img = img_src.read(1)
             # L1C images don't define the nodata value on file so we can't update the
             # mask (e.g., via `write_mask`) but 0 is used as the nodata value
             # (see SPECIAL_VALUE_INDEX for NODATA in metadata)
             img[lost_degraded_mask] = 0
-            img_src.write(img, indexes=1)
+            img_src.write(img, 1)
 
 
 @click.command()
