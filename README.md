@@ -3,6 +3,9 @@
 
 ## Usage
 ```bash
+$ apply_s2_quality_mask INPUTS2DIR
+```
+```bash
 $ check_solar_zenith_sentinel INPUTXML
 ```
 ```bash
