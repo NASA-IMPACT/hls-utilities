@@ -166,7 +166,7 @@ def apply_quality_mask(image: Path, mask: Path):
     type=click.Path(file_okay=False, dir_okay=True, exists=True),
 )
 @click.pass_context
-def main(ctx, granule_dir: Path):
+def main(ctx, granule_dir: str):
     """Update Sentinel-2 imagery by masking lost or degraded pixels"""
     granule_dir = Path(granule_dir)
 
