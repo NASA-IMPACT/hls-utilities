@@ -1,21 +1,24 @@
-from typing import List, Optional, Tuple
+from typing import List, Optional, Tuple, TypeVar
 from pathlib import Path
 
 import click
 import rasterio
+from lxml import etree
 
 
 # MSI band number definitions for bands used by HLS v2 product
 # (coastal, blue/green/red, NIR, SWIR1, SWIR2)
-SPECTRAL_BANDS = frozenset({
-    "B01",
-    "B02",
-    "B03",
-    "B04",
-    "B8A",
-    "B11",
-    "B12",
-})
+SPECTRAL_BANDS = frozenset(
+    {
+        "B01",
+        "B02",
+        "B03",
+        "B04",
+        "B8A",
+        "B11",
+        "B12",
+    }
+)
 
 # ensure compression is lossless to avoid changing values,
 # https://gdal.org/en/stable/drivers/raster/jp2openjpeg.html#lossless-compression
@@ -26,12 +29,55 @@ JPEG2000_NO_COMPRESSION_OPTIONS = {
 }
 
 
-def _one_or_none(paths: List[Path]) -> Optional[Path]:
-    if len(paths) == 1:
-        return paths[0]
+T = TypeVar("T")
 
 
-def find_image_mask_pairs(granule_dir: Path) -> List[Tuple[Path, Path]]:
+def _one_or_none(seq: List[T]) -> Optional[T]:
+    if len(seq) == 1:
+        return seq[0]
+
+
+def find_affected_bands(granule_dir: Path) -> List[str]:
+    """Check the granule GENERAL_QUALITY.xml for affected bands, if any"""
+    report_path = _one_or_none(list(granule_dir.glob("**/QI_DATA/GENERAL_QUALITY.xml")))
+
+    # We couldn't find the report, so check all quality masks
+    if report_path is None:
+        return list(SPECTRAL_BANDS)
+
+    quality_report = etree.parse(str(report_path))
+    root = quality_report.getroot()
+    # give default namespace a name for use in xpath
+    nsmap = {"qa": root.nsmap[None]}
+
+    # We have a XML structure like,
+    # <check>
+    #   <inspection ... id="Data_Loss" status="FAILED">
+    #   <message>There is data loss in this tile</message>
+    #   <extraValues>
+    #       <value name="Affected_Bands">B01 B02</value>
+    #   </extraValues>
+    # </check>
+    #
+    # We want to grab the text from the "Affected_Bands" when the message
+    # indicates there is data loss in the tile.
+    data_loss_bands_txt = _one_or_none(
+        root.xpath(
+            (
+                ".//qa:check[qa:message/text() = 'There is data loss in this tile']/"
+                "qa:extraValues/qa:value[@name = 'Affected_Bands']/text()"
+            ),
+            namespaces=nsmap,
+        )
+    )
+    if data_loss_bands_txt is not None:
+        return data_loss_bands_txt.split(" ")
+    return []
+
+
+def find_image_mask_pairs(
+    granule_dir: Path, bands: List[str]
+) -> List[Tuple[Path, Path]]:
     """Search granule directory for image + mask pairs
 
     The quality masks were produced in an imagery format since baseline 04.00
@@ -57,7 +103,7 @@ def find_image_mask_pairs(granule_dir: Path) -> List[Tuple[Path, Path]]:
     https://sentinels.copernicus.eu/web/sentinel/-/copernicus-sentinel-2-major-products-upgrade-upcoming
     """
     pairs = []
-    for band in SPECTRAL_BANDS:
+    for band in bands:
         image = _one_or_none(list(granule_dir.glob(f"**/IMG_DATA/*{band}.jp2")))
         mask = _one_or_none(list(granule_dir.glob(f"**/QI_DATA/MSK_QUALIT_{band}.jp2")))
         if image and mask:
@@ -119,13 +165,19 @@ def apply_quality_mask(image: Path, mask: Path):
     "granule_dir",
     type=click.Path(file_okay=False, dir_okay=True, exists=True),
 )
-def main(granule_dir: Path):
+@click.pass_context
+def main(ctx, granule_dir: Path):
     """Update Sentinel-2 imagery by masking lost or degraded pixels"""
     granule_dir = Path(granule_dir)
+
+    affected_bands = find_affected_bands(granule_dir)
+    affected_hls_bands = SPECTRAL_BANDS.intersection(affected_bands)
+    if not affected_hls_bands:
+        click.echo(f"No bands are affected by data loss in {granule_dir}")
+        ctx.exit()
+
     click.echo(f"Applying Sentinel-2 QAQC mask to granule_dir={granule_dir}")
-
-    image_mask_pairs = find_image_mask_pairs(granule_dir)
-
+    image_mask_pairs = find_image_mask_pairs(granule_dir, affected_hls_bands)
     for (image, mask) in image_mask_pairs:
         apply_quality_mask(image, mask)
 
