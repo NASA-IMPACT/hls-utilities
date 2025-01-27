@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?><Earth_Explorer_File xmlns="http://gs2.esa.int/DATA_STRUCTURE/olqcReport">
+    <Earth_Explorer_Header>
+        <Fixed_Header>
+            <File_Name>GRANULE/L1C_T45TXF_A038726_20221121T050115/QI_DATA/GENERAL_QUALITY.xml</File_Name>
+            <File_Description>Report produced by OLQC-SC</File_Description>
+            <Notes/>
+            <Mission>S2A</Mission>
+            <File_Class>OPER</File_Class>
+            <File_Type>REP_OLQCPA</File_Type>
+            <Validity_Period>
+                <Validity_Start>UTC=2022-08-30T00:25:00</Validity_Start>
+                <Validity_Stop>UTC=2100-01-01T00:00:00</Validity_Stop>
+            </Validity_Period>
+            <File_Version>2</File_Version>
+            <Source>
+                <System>OLQC-SC</System>
+                <Creator>OLQC-SC</Creator>
+                <Creator_Version>05.01.00</Creator_Version>
+                <Creation_Date>UTC=2022-11-21T07:37:39</Creation_Date>
+            </Source>
+        </Fixed_Header>
+    </Earth_Explorer_Header>
+    <Data_Block type="xml">
+        <report date="2022-11-21T07:37:39.124Z" gippVersion="1.0" globalStatus="FAILED">
+            <checkList>
+                <parentID>S2A_OPER_GIP_OLQCPA_MPC__20220715T000042_V20220830T002500</parentID>
+                <name>GENERAL_QUALITY</name>
+                <version>1.0</version>
+                <item class="http://www.esa.int/s2#pdi_level_1c_tile_container" className="PDI Level 1C Tile Folder" name="S2A_OPER_MSI_L1C_TL_ATOS_20221121T053331_A038726_T45TXF_N04.00" url="/mnt/nfs-l1-02/l1-processing/processing-id-17769-2022-11-21-06-03-12/TaskTable_20221121T060312/FORMAT_METADATA_TILE_L1C_ADAPT/output/PDI_DS_TILE_LIST/S2A_OPER_MSI_L1C_TL_ATOS_20221121T053331_A038726_T45TXF_N04.00/"/>
+                <check>
+                    <inspection creation="2022-11-21T07:37:38.889Z" duration="210" execution="2022-11-21T07:37:38.893Z" id="checkMetadata" item="S2A_OPER_MSI_L1C_TL_ATOS_20221121T053331_A038726_T45TXF_N04.00" itemURL="/mnt/nfs-l1-02/l1-processing/processing-id-17769-2022-11-21-06-03-12/TaskTable_20221121T060312/FORMAT_METADATA_TILE_L1C_ADAPT/output/PDI_DS_TILE_LIST/S2A_OPER_MSI_L1C_TL_ATOS_20221121T053331_A038726_T45TXF_N04.00/" name="Metadata file check. " priority="5" processingStatus="done" status="PASSED"/>
+                    <message contentType="text/plain">Metadata file is present.</message>
+                </check>
+                <check>
+                    <inspection creation="2022-11-21T07:37:41.147Z" duration="281" execution="2022-11-21T07:37:41.188Z" id="Solar_Angle_Zenith" item="S2A_OPER_MTD_L1C_TL_ATOS_20221121T053331_A038726_T45TXF.xml" itemURL="/mnt/nfs-l1-02/l1-processing/processing-id-17769-2022-11-21-06-03-12/TaskTable_20221121T060312/FORMAT_METADATA_TILE_L1C_ADAPT/output/PDI_DS_TILE_LIST/S2A_OPER_MSI_L1C_TL_ATOS_20221121T053331_A038726_T45TXF_N04.00/S2A_OPER_MTD_L1C_TL_ATOS_20221121T053331_A038726_T45TXF.xml" name="Check the zenith solar angle. " priority="5" processingStatus="done" status="PASSED"/>
+                    <message contentType="text/plain">Zenith solar angle (61.7640691258715) is within the threshold limit (82.0) </message>
+                    <extraValues>
+                        <value name="EXPECTED">82.0</value>
+                        <value name="SOLAR_ZENITH_ANGLE">61.7640691258715</value>
+                    </extraValues>
+                </check>
+                <check>
+                    <inspection creation="2022-11-21T07:37:42.488Z" duration="11940" execution="2022-11-21T07:37:42.495Z" id="Data_Loss" item="S2A_OPER_MSI_L1C_TL_ATOS_20221121T053331_A038726_T45TXF_N04.00" itemURL="/mnt/nfs-l1-02/l1-processing/processing-id-17769-2022-11-21-06-03-12/TaskTable_20221121T060312/FORMAT_METADATA_TILE_L1C_ADAPT/output/PDI_DS_TILE_LIST/S2A_OPER_MSI_L1C_TL_ATOS_20221121T053331_A038726_T45TXF_N04.00/" name="Check TECQUA for data loss " priority="5" processingStatus="done" status="FAILED"/>
+                    <message contentType="text/plain">There is data loss in this tile</message>
+                    <extraValues>
+                        <value name="Affected_Bands">B01 B02 B03 B04 B05 B06 B07 B08 B09 B10 B11 B12 B8A</value>
+                    </extraValues>
+                </check>
+            </checkList>
+        </report>
+    </Data_Block>
+</Earth_Explorer_File>
