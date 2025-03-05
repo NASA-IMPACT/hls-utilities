@@ -11,6 +11,7 @@ from apply_s2_quality_mask.apply_s2_quality_mask import (
     JPEG2000_NO_COMPRESSION_OPTIONS,
     SPECTRAL_BANDS,
     apply_quality_mask,
+    build_quality_mask,
     find_affected_bands,
     find_image_mask_pairs,
 )
@@ -82,15 +83,15 @@ def test_find_image_mask_pairs_found_all(tmp_path: Path):
 
     mask_data = np.zeros((8, 1, 1), dtype="uint8")
 
-    expected_images_masks = []
+    expected_images_masks = {}
     for band in SPECTRAL_BANDS:
-        expected_images_masks.append(make_fake_s2_granule(granule_prefix, band, mask_data))
+        expected_images_masks[band] = make_fake_s2_granule(granule_prefix, band, mask_data)
 
     # Make sure we find all of the expected paths
     image_mask_pairs = find_image_mask_pairs(tmp_path, SPECTRAL_BANDS)
 
-    for image_mask_pair in expected_images_masks:
-        assert image_mask_pair in image_mask_pairs
+    for band, expected_images_masks in expected_images_masks.items():
+        assert image_mask_pairs[band] == expected_images_masks
 
 
 def test_find_image_mask_pairs_found_not_all(tmp_path: Path):
@@ -116,22 +117,23 @@ def test_apply_quality_mask_overwrites_value(tmp_path: Path):
     #   * (0, 1) ~> lost MSI packet
     #   * (1, 0) ~> degraded MSI packet
     #   * (1, 1) ~> lost + degraded MSI packet (both set)
-    mask_data = np.zeros((8, 2, 2), dtype="uint8")
-    mask_data[2, 0, 1] = 1
-    mask_data[3, 1, 0] = 1
-    mask_data[2, 1, 1] = 1
-    mask_data[3, 1, 1] = 1
-    assert mask_data.sum() == 4
+    qa_data = np.zeros((8, 2, 2), dtype="uint8")
+    qa_data[2, 0, 1] = 1
+    qa_data[3, 1, 0] = 1
+    qa_data[2, 1, 1] = 1
+    qa_data[3, 1, 1] = 1
+    assert qa_data.sum() == 4
 
     granule_id = "L1C_T45TXF_A038726_20221121T050115"
     granule_prefix = tmp_path / f"{granule_id}.SAFE" / "GRANULE" / granule_id
 
-    image, mask = make_fake_s2_granule(granule_prefix, "B02", mask_data)
+    image_path, qa_image_path = make_fake_s2_granule(granule_prefix, "B02", qa_data)
 
-    apply_quality_mask(image, mask)
+    mask = build_quality_mask([qa_image_path])
+    apply_quality_mask(image_path, mask)
 
     # Check data ~> image should have 0s in 3 pixel locations
-    with rasterio.open(image) as src:
+    with rasterio.open(image_path) as src:
         image_data = src.read(1)
 
     np.testing.assert_array_equal(
