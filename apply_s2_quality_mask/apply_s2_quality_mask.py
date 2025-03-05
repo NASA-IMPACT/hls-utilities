@@ -1,13 +1,16 @@
-from typing import List, Optional, Tuple, TypeVar
+from typing import Dict, List, Optional, Sequence, Tuple, TypeVar
 from pathlib import Path
 
 import click
+import numpy as np
 import rasterio
 from lxml import etree
 
 
-# MSI band number definitions for bands used by HLS v2 product
-# (coastal, blue/green/red, NIR, SWIR1, SWIR2)
+# MSI band number definitions for bands used by HLS "LaSRC" surface reflectance
+# correction routine.
+# These bands include bands not used by the HLS product, but required for LaSRC.
+# We must mask all of them or LaSRC will consider a pixel "valid".
 SPECTRAL_BANDS = frozenset(
     {
         "B01",
@@ -33,6 +36,16 @@ JPEG2000_NO_COMPRESSION_OPTIONS = {
     "REVERSIBLE": "YES",
     "YCBCR420": "NO",
 }
+
+# L1C images don't define the nodata value on file so we can't update the
+# mask (e.g., via `write_mask`) but 0 is used as the nodata value
+# (see SPECIAL_VALUE_INDEX for NODATA in metadata)
+SENTINEL_L1C_NODATA_VALUE = 0
+
+# We need to combine masks from all bands together so prefer resampling to 20m
+# because 60m bands aren't used for HLS outputs and 10m bands will be masked by any
+# pixels at 20m
+SENTINEL2_20M_SHAPE = (5490, 5490)
 
 
 T = TypeVar("T")
@@ -83,7 +96,7 @@ def find_affected_bands(granule_dir: Path) -> List[str]:
 
 def find_image_mask_pairs(
     granule_dir: Path, bands: List[str]
-) -> List[Tuple[Path, Path]]:
+) -> Dict[str, Tuple[Path, Path]]:
     """Search granule directory for image + mask pairs
 
     The quality masks were produced in an imagery format since baseline 04.00
@@ -108,21 +121,50 @@ def find_image_mask_pairs(
     ----------
     https://sentinels.copernicus.eu/web/sentinel/-/copernicus-sentinel-2-major-products-upgrade-upcoming
     """
-    pairs = []
+    band_to_image_mask = {}
     for band in bands:
         image = _one_or_none(list(granule_dir.glob(f"**/IMG_DATA/*{band}.jp2")))
         mask = _one_or_none(list(granule_dir.glob(f"**/QI_DATA/MSK_QUALIT_{band}.jp2")))
         if image and mask:
-            pairs.append((image, mask))
+            band_to_image_mask[band] = (image, mask)
 
     # Find all bands, or none
-    if len(pairs) == len(SPECTRAL_BANDS):
-        return pairs
-    return []
+    if len(band_to_image_mask) == len(SPECTRAL_BANDS):
+        return band_to_image_mask
+    return {}
 
 
-def apply_quality_mask(image: Path, mask: Path):
-    """Apply Sentinel-2 image quality mask
+def adjust_spatial_resolution(
+    array: np.ndarray, desired_shape: Tuple[int, int]
+) -> np.ndarray:
+    """Adjust spatial resolution (down or up) of input array
+
+    Sentinel-2 resolutions are integer multiples of one another, so we can easily
+    resize as needed without complicated resampling or warping.
+    """
+    if array.ndim == 2:
+        array_shape = array.shape
+    else:
+        raise ValueError("Only supports 2D arrays")
+
+    # Sentinel-2 images are square, so we only need to check 1 dimension
+    if array_shape[0] < desired_shape[0]:  # e.g., 60m to 20m
+        scale = int(desired_shape[0] / array_shape[0])
+        return np.repeat(np.repeat(array, scale, axis=-2), scale, axis=-1)
+    elif array_shape[0] > desired_shape[0]:  # e.g., 10m to 20m
+        scale = int(array_shape[0] / desired_shape[0])
+        return array[::scale, ::scale]
+    else:
+        return array
+
+
+def build_quality_mask(qa_images: Sequence[Path]) -> np.ndarray:
+    """Build combined Sentinel-2 image quality mask from all bands if _any_ is masked
+
+    The LaSRC algorithm considers a pixel valid if it has valid data in _any_ band,
+    so we must combine the masks from _all_ bands for LaSRC to mask it.
+
+    In this mask, a value of "True" means the pixel should be masked.
 
     Each spectral band (`IMG_DATA/B*.jp2`) has a corresponding quality mask
     image (`QI_DATA/MSK_QUALIT_B*.jp2`) of the same spatial resolution. The mask
@@ -143,27 +185,34 @@ def apply_quality_mask(image: Path, mask: Path):
     and the cross talk is partially corrected.
     Saturated pixels are still useful for the magnitude of the reflectance; keep it.
 
-    We apply the mask by updating the spectral data images in-place rather than
-    creating another file.
-
     References
     ----------
     https://sentinels.copernicus.eu/web/sentinel/technical-guides/sentinel-2-msi/data-quality-reports
     """
-    with rasterio.open(mask) as mask_src:
-        qa_bands = mask_src.read(indexes=[3, 4])
-        lost_degraded_mask = (qa_bands == 1).any(axis=0)
+    combined_mask = np.full(SENTINEL2_20M_SHAPE, False)
+    for qa_image in qa_images:
+        with rasterio.open(qa_image) as mask_src:
+            qa_bands = mask_src.read(indexes=[3, 4])
+        qa_mask = (qa_bands == 1).any(axis=0)
+        qa_mask_20m = adjust_spatial_resolution(qa_mask, SENTINEL2_20M_SHAPE)
+        combined_mask = np.ma.mask_or(combined_mask, qa_mask_20m)
 
-    # only update imagery if mask shows it has any bad pixels
-    if lost_degraded_mask.any():
-        click.echo(f"Masking lost or degraded pixel values in {image}")
-        with rasterio.open(image, "r+", **JPEG2000_NO_COMPRESSION_OPTIONS) as img_src:
-            img = img_src.read(1)
-            # L1C images don't define the nodata value on file so we can't update the
-            # mask (e.g., via `write_mask`) but 0 is used as the nodata value
-            # (see SPECIAL_VALUE_INDEX for NODATA in metadata)
-            img[lost_degraded_mask] = 0
-            img_src.write(img, 1)
+    return combined_mask
+
+
+def apply_quality_mask(image: Path, mask: np.ndarray):
+    """Apply Sentinel-2 image quality mask
+
+    We apply the mask by updating the spectral data images in-place rather than
+    creating another file.
+    """
+    click.echo(f"Masking lost or degraded pixel values in {image}")
+    with rasterio.open(image, "r+", **JPEG2000_NO_COMPRESSION_OPTIONS) as img_src:
+        img = img_src.read(1)
+        mask_for_img = adjust_spatial_resolution(mask, img.shape)
+        img[mask_for_img] = SENTINEL_L1C_NODATA_VALUE
+
+        img_src.write(img, 1)
 
 
 @click.command()
@@ -182,10 +231,23 @@ def main(ctx, granule_dir: str):
         click.echo(f"No bands are affected by data loss in {granule_dir}")
         ctx.exit()
 
-    click.echo(f"Applying Sentinel-2 QAQC mask to granule_dir={granule_dir}")
-    image_mask_pairs = find_image_mask_pairs(granule_dir, affected_hls_bands)
-    for (image, mask) in image_mask_pairs:
-        apply_quality_mask(image, mask)
+    # Find image & mask pairs for all bands as we will need to apply
+    # the mask to all bands
+    image_mask_pairs = find_image_mask_pairs(granule_dir, SPECTRAL_BANDS)
+
+    # We only need to include bands that are marked as affected by the issue
+    # when building our mask
+    quality_mask = build_quality_mask(
+        sorted([image_mask_pairs[band][1] for band in affected_hls_bands])
+    )
+
+    # only update imagery if mask shows it has any bad pixels
+    if not quality_mask.any():
+        click.echo("No pixels in any band are affected by lost or degraded MSI packets")
+    else:
+        click.echo(f"Applying Sentinel-2 QAQC mask to granule_dir={granule_dir}")
+        for image, _ in image_mask_pairs.values():
+            apply_quality_mask(image, quality_mask)
 
     click.echo("Complete")
 
