@@ -142,17 +142,15 @@ def adjust_spatial_resolution(
     Sentinel-2 resolutions are integer multiples of one another, so we can easily
     resize as needed without complicated resampling or warping.
     """
-    if array.ndim == 2:
-        array_shape = array.shape
-    else:
+    if array.ndim != 2:
         raise ValueError("Only supports 2D arrays")
 
     # Sentinel-2 images are square, so we only need to check 1 dimension
-    if array_shape[0] < desired_shape[0]:  # e.g., 60m to 20m
-        scale = int(desired_shape[0] / array_shape[0])
+    if array.shape[0] < desired_shape[0]:  # e.g., 60m to 20m
+        scale = int(desired_shape[0] / array.shape[0])
         return np.repeat(np.repeat(array, scale, axis=-2), scale, axis=-1)
-    elif array_shape[0] > desired_shape[0]:  # e.g., 10m to 20m
-        scale = int(array_shape[0] / desired_shape[0])
+    elif array.shape[0] > desired_shape[0]:  # e.g., 10m to 20m
+        scale = int(array.shape[0] / desired_shape[0])
         return array[::scale, ::scale]
     else:
         return array
