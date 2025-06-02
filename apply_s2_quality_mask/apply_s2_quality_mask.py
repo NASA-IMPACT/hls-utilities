@@ -109,10 +109,7 @@ def find_image_mask_pairs(
         if image and mask:
             pairs.append((image, mask))
 
-    # Find all bands, or none
-    if len(pairs) == len(SPECTRAL_BANDS):
-        return pairs
-    return []
+    return pairs
 
 
 def apply_quality_mask(image: Path, mask: Path):

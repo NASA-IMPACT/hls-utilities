@@ -18,28 +18,45 @@ from apply_s2_quality_mask.apply_s2_quality_mask import (
 TEST_DATA = Path(__file__).parents[0].joinpath("data", "quality-mask")
 
 
-@pytest.mark.parametrize(["granule_dir", "affected_bands"], [
-    pytest.param(
-        TEST_DATA / "L1C_T45TXF_A038726_20221121T050115",
-        ["B01", "B02", "B03", "B04", "B05", "B06", "B07", "B08", "B09", "B10", "B11", "B12", "B8A"],
-        id="All bands affected",
-    ),
-    pytest.param(
-        TEST_DATA / "L1C_T43QDG_A031305_20230305T053523",
-        ["B01", "B02", "B03", "B09", "B10", "B11", "B12", "B8A"],
-        id="Subset of bands affected",
-    ),
-    pytest.param(
-        TEST_DATA / "L1C_T12QXM_A048143_20240909T175112",
-        [],
-        id="No bands affected",
-    ),
-    pytest.param(
-        TEST_DATA,
-        SPECTRAL_BANDS,
-        id="No metadata file present",
-    )
-])
+@pytest.mark.parametrize(
+    ["granule_dir", "affected_bands"],
+    [
+        pytest.param(
+            TEST_DATA / "L1C_T45TXF_A038726_20221121T050115",
+            [
+                "B01",
+                "B02",
+                "B03",
+                "B04",
+                "B05",
+                "B06",
+                "B07",
+                "B08",
+                "B09",
+                "B10",
+                "B11",
+                "B12",
+                "B8A",
+            ],
+            id="All bands affected",
+        ),
+        pytest.param(
+            TEST_DATA / "L1C_T43QDG_A031305_20230305T053523",
+            ["B01", "B02", "B03", "B09", "B10", "B11", "B12", "B8A"],
+            id="Subset of bands affected",
+        ),
+        pytest.param(
+            TEST_DATA / "L1C_T12QXM_A048143_20240909T175112",
+            [],
+            id="No bands affected",
+        ),
+        pytest.param(
+            TEST_DATA,
+            SPECTRAL_BANDS,
+            id="No metadata file present",
+        ),
+    ],
+)
 def test_find_affected_bands(granule_dir: Path, affected_bands: List[str]):
     """Test we find the bands affected by a quality issue correctly from metadata"""
     test = find_affected_bands(granule_dir)
@@ -84,7 +101,9 @@ def test_find_image_mask_pairs_found_all(tmp_path: Path):
 
     expected_images_masks = []
     for band in SPECTRAL_BANDS:
-        expected_images_masks.append(make_fake_s2_granule(granule_prefix, band, mask_data))
+        expected_images_masks.append(
+            make_fake_s2_granule(granule_prefix, band, mask_data)
+        )
 
     # Make sure we find all of the expected paths
     image_mask_pairs = find_image_mask_pairs(tmp_path, SPECTRAL_BANDS)
@@ -102,11 +121,33 @@ def test_find_image_mask_pairs_found_not_all(tmp_path: Path):
 
     expected_images_masks = []
     for band in list(SPECTRAL_BANDS)[:2]:
-        expected_images_masks.append(make_fake_s2_granule(granule_prefix, band, mask_data))
+        expected_images_masks.append(
+            make_fake_s2_granule(granule_prefix, band, mask_data)
+        )
 
     # Make sure we find all of the expected paths
     image_mask_pairs = find_image_mask_pairs(tmp_path, SPECTRAL_BANDS)
     assert not image_mask_pairs
+
+
+def test_find_image_mask_pairs_found_not_all(tmp_path: Path):
+    """Ensure we return what we found even if some are missing"""
+    granule_id = "L1C_T45TXF_A038726_20221121T050115"
+    granule_prefix = tmp_path / f"{granule_id}.SAFE" / "GRANULE" / granule_id
+
+    mask_data = np.zeros((8, 1, 1), dtype="uint8")
+
+    bands_with_masks = list(SPECTRAL_BANDS)[:2]
+
+    expected_images_masks = []
+    for band in bands_with_masks:
+        expected_images_masks.append(
+            make_fake_s2_granule(granule_prefix, band, mask_data)
+        )
+
+    # Make sure we find all of the expected paths
+    image_mask_pairs = find_image_mask_pairs(tmp_path, bands_with_masks)
+    assert len(image_mask_pairs) == len(bands_with_masks)
 
 
 def test_apply_quality_mask_overwrites_value(tmp_path: Path):

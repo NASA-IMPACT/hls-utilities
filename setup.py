@@ -14,8 +14,8 @@ setup(
     ],
     include_package_data=True,
     extras_require={
-        "dev": ["flake8", "black"],
-        "test": ["flake8", "pytest", "Jinja2==2.10.1", "moto[s3]~=2.0.8"]
+        "dev": ["ruff"],
+        "test": ["ruff", "pytest", "Jinja2==2.10.1", "moto[s3]~=2.0.8", "markupsafe==2"]
     },
     entry_points={"console_scripts": [
         "apply_s2_quality_mask=apply_s2_quality_mask.apply_s2_quality_mask:main",

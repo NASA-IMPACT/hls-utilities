@@ -4,10 +4,10 @@ on: [push]
 
 jobs:
   build_test:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     strategy:
       matrix:
-        python: [3.6]
+        python: [3.9]
 
     steps:
       - uses: actions/checkout@v2
