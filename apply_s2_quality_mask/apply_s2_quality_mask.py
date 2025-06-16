@@ -6,15 +6,22 @@ import rasterio
 from lxml import etree
 
 
-# MSI band number definitions for bands used by HLS v2 product
-# (coastal, blue/green/red, NIR, SWIR1, SWIR2)
+# MSI band number definitions
+# LaSRC is run with "PROC_ALL_BANDS" which includes B09 (water vapor) and B10 (cirrus)
+# so we must mask these bands as well
 SPECTRAL_BANDS = frozenset(
     {
         "B01",
         "B02",
         "B03",
         "B04",
+        "B05",
+        "B06"
+        "B07",
+        "B08",
         "B8A",
+        "B09",
+        "B10",
         "B11",
         "B12",
     }
@@ -168,13 +175,12 @@ def main(ctx, granule_dir: str):
     granule_dir = Path(granule_dir)
 
     affected_bands = find_affected_bands(granule_dir)
-    affected_hls_bands = SPECTRAL_BANDS.intersection(affected_bands)
-    if not affected_hls_bands:
+    if not affected_bands:
         click.echo(f"No bands are affected by data loss in {granule_dir}")
         ctx.exit()
 
     click.echo(f"Applying Sentinel-2 QAQC mask to granule_dir={granule_dir}")
-    image_mask_pairs = find_image_mask_pairs(granule_dir, affected_hls_bands)
+    image_mask_pairs = find_image_mask_pairs(granule_dir, affected_bands)
     for (image, mask) in image_mask_pairs:
         apply_quality_mask(image, mask)
 
