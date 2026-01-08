@@ -2,15 +2,15 @@ from setuptools import setup, find_packages
 
 setup(
     name="hls-utilities",
-    version="0.1",
+    version="1.11.2",
     packages=find_packages(),
     install_requires=[
-        "click~=7.1.0",
+        "click",
         "lxml",
-        "boto3~=1.17.91",
+        "boto3",
         "espa-python-library @ git+https://github.com/USGS-EROS/espa-python-library.git@v2.0.0#egg=espa-python-library",
-        "rasterio~=1.2",
-        "numpy~=1.16",
+        "rasterio",
+        "numpy",
     ],
     include_package_data=True,
     extras_require={
