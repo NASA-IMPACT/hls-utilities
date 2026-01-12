@@ -3,7 +3,7 @@ import io
 import pytest
 import boto3
 from click.testing import CliRunner
-from moto import mock_s3
+from moto import mock_aws
 from download_landsat.download_landsat import get_landsat, main
 from download_landsat.download_landsat import KeyDoesNotExist
 
@@ -33,7 +33,7 @@ def aws_credentials():
 
 @pytest.fixture(scope="function")
 def s3(aws_credentials):
-    with mock_s3():
+    with mock_aws():
         client = boto3.client("s3", region_name="us-east-1")
         client.create_bucket(Bucket=BUCKET)
         client.put_bucket_request_payment(

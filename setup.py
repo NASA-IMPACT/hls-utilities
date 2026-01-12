@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="hls-utilities",
-    version="1.11.2",
+    version="1.11.3",
     packages=find_packages(),
     install_requires=[
         "click",
@@ -15,7 +15,7 @@ setup(
     include_package_data=True,
     extras_require={
         "dev": ["ruff"],
-        "test": ["ruff", "pytest", "Jinja2==2.10.1", "moto[s3]~=2.0.8", "markupsafe==2"]
+        "test": ["ruff", "pytest", "Jinja2", "moto[s3]", "markupsafe==2"]
     },
     entry_points={"console_scripts": [
         "apply_s2_quality_mask=apply_s2_quality_mask.apply_s2_quality_mask:main",
