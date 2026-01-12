@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="hls-utilities",
-    version="1.11.2",
+    version="1.11.3",
     packages=find_packages(),
     install_requires=[
         "click",
